@@ -2,8 +2,8 @@ List<List<Step>> result = [
   [Step("1")],
 ];
 
-const int COUNT = 30;
-const int RADIX = 23;
+const int COUNT = 15;
+const int RADIX = 10;
 const String SPACE = "";
 
 void main() async {
@@ -17,7 +17,7 @@ void main() async {
         result[e].add(Step("-"));
         result[e].add(Step((value * 2).toString()));
 
-        if ((value - 1) % 3 == 0 && value != 1 && value != 4) {
+        if (((value - 1) / 3) % 2 == 1 && value != 4) {
           result.insert(e + 1, []);
 
           for (int n = 0; n < i * 2 + 1; n++) {
