@@ -2,8 +2,12 @@ List<List<Step>> result = [
   [Step("1")],
 ];
 
+const int COUNT = 30;
+const int RADIX = 23;
+const String SPACE = "";
+
 void main() async {
-  for (int i = 0; i < 18; i++) {
+  for (int i = 0; i < COUNT; i++) {
     List<int> ignore = [];
     for (int e = 0; e < result.length; e++) {
       if (!ignore.contains(e)) {
@@ -33,8 +37,9 @@ void main() async {
   for (int i = 0; i < result[0].length; i++) {
     maxLengths.add(1);
     for (int e = 0; e < result.length; e++) {
-      if (result[e][i].value.length > maxLengths[i]) {
-        maxLengths[i] = result[e][i].value.length;
+      int length = result[e][i].toRadixString(RADIX).length;
+      if (length > maxLengths[i]) {
+        maxLengths[i] = length;
       }
 
       if (e != 0) {
@@ -53,8 +58,9 @@ void main() async {
     String text = "";
     for (int e = 0; e < result[0].length; e++) {
       final Step step = result[i][e];
+      final String value = step.toRadixString(RADIX);
 
-      text = "$text ${" " * (maxLengths[e] - step.value.length)}${step.value}";
+      text = "$text$SPACE${" " * (maxLengths[e] - value.length)}$value";
     }
     print(text);
   }
@@ -67,5 +73,13 @@ class Step {
 
   int intValue() {
     return int.tryParse(value) ?? 0;
+  }
+  
+  String toRadixString(int radix){
+    final int num = intValue();
+    if(num == 0){
+      return value;
+    }
+    return intValue().toRadixString(radix);
   }
 }
